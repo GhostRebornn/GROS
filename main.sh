@@ -9,9 +9,14 @@ function isTrue() {
   fi
 }
 
+function getOSDirectory() {
+  read -p "Enter OS Directory like /home/user/some/os/path: " OS_PATH
+  cd $OS_PATH
+}
+
 printf "Synced AOSP Sources: \n"
 if isTrue; then
-  printf "Great!"
+  getOSDirectory
 else
   printf "Syncing sources...\n"
   ./init.sh
