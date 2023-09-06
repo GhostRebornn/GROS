@@ -9,10 +9,10 @@ function isTrue() {
   fi
 }
 
-echo "Synced AOSP Sources: \n"
+printf "Synced AOSP Sources: \n"
 if isTrue; then
-  echo "Great!"
+  printf "Great!"
 else
-  echo "Syncing sources..."
+  printf "Syncing sources...\n"
   ./init.sh
 fi
