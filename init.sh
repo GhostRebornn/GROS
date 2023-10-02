@@ -24,8 +24,9 @@ git config --global user.email $GIT_EMAIL
 link_snippets() {
     cp -r $CUR_DIR/snippets $OS_PWD$OS_NAME/.repo/manifests/
     cd $OS_PWD$OS_NAME/.repo/manifests
+    mv snippets/GROS.xml snippets/$OS_NAME.xml
     sed 's/fetch=".."/fetch="android.googlesource.com"/' default.xml > temp.txt && mv temp.txt default.xml
-    awk '
+    awk -v OS_NAME="$OS_NAME" '
         /<include name="snippets\/GROS.xml" \/>/ {
             found = 1
         }
@@ -42,7 +43,7 @@ link_snippets() {
         }
         END {
             if (!found) {
-                print "  <include name=\"snippets/GROS.xml\" />"
+                print "  <include name=\"snippets/" OS_NAME ".xml\" />"
                 print "</manifest>"
             }
         }
