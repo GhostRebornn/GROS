@@ -12,14 +12,27 @@ mkdir -p $OS_NAME
 cd $OS_NAME
 
 # Syncing AOSP Sources
-printf "Enter Git username: "
-read GIT_USERNAME
-printf "Enter Git email: "
-read GIT_EMAIL
+if [ -n "$(git config --get credential.helper)" ]; then
+    echo "Credential helper: $(git config --get credential.helper)"
+else
+    git config --global credential.helper store
+fi
 
-git config --global credential.helper store
-git config --global user.name $GIT_USERNAME
-git config --global user.email $GIT_EMAIL
+if [ -n "$(git config --get user.name)" ]; then
+    echo "User name: $(git config --get user.name)"
+else
+    printf "Enter Git username: "
+    read GIT_USERNAME
+    git config --global user.name $GIT_USERNAME
+fi
+
+if [ -n "$(git config --get user.email)" ]; then
+    echo "User email: $(git config --get user.email)"
+else
+    printf "Enter Git email: "
+    read GIT_EMAIL
+    git config --global user.email $GIT_EMAIL
+fi
 
 link_snippets() {
     cp -r $CUR_DIR/snippets $OS_PWD$OS_NAME/.repo/manifests/
