@@ -38,7 +38,6 @@ link_snippets() {
     cp -r $CUR_DIR/snippets $OS_PWD$OS_NAME/.repo/manifests/
     cd $OS_PWD$OS_NAME/.repo/manifests
     mv snippets/GROS.xml snippets/$OS_NAME.xml
-    sed 's/fetch=".."/fetch="android.googlesource.com"/' default.xml > temp.txt && mv temp.txt default.xml
     awk -v OS_NAME="$OS_NAME" '
         /<include name="snippets\/GROS.xml" \/>/ {
             found = 1
@@ -65,6 +64,6 @@ link_snippets() {
     cd ..
 }
 
-repo init --depth=1 --groups=all,-darwin -u https://android.googlesource.com/platform/manifest -b android-13.0.0_r82
+repo init --depth=1 --groups=all,-darwin -u https://android.googlesource.com/platform/manifest -b android-14.0.0_r2
 link_snippets
 repo sync -j2 -c -v --force-sync --no-clone-bundle --no-tags
